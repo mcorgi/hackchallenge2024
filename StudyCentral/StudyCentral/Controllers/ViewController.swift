@@ -13,6 +13,7 @@ struct ViewController: View {
     let classItem: ClassItem
     @State private var expandedTopic: String?
     @State private var selectedPrelim: String = "First Prelim"
+    @State private var resourceList: [Resource] = []
     @State private var newResourceLink: String = ""
     @State private var newResourceTopic: String = ""
     
@@ -137,7 +138,7 @@ struct ViewController: View {
                             .background(Color.purple.opacity(0.4))
                             .padding(.bottom, 8)
 
-                            Button(action: addResource) {
+                            Button(action: addResource) { //change this to addNewResource once networking is working
                                 Text("Add Resource")
                                     .padding()
                                     .frame(maxWidth: .infinity)
@@ -159,6 +160,22 @@ struct ViewController: View {
         }
     }
 
+    //MARK: - Networking
+    private func fetchResource () {
+        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resources in
+            /*guard let self else { return }*/
+            self.resourceList = resources
+        })
+    }
+    private func addNewResource() {
+        // TODO: Send a POST request to create a resource
+        let link = newResourceLink
+        let topic = newResourceTopic
+        NetworkManager.shared.addResource(link: link, topic: topic) { classItem in
+            print ("added resource")
+        }
+    }
+    
     // MARK: - Add Resource
     private func addResource() {
         guard !newResourceLink.isEmpty, !newResourceTopic.isEmpty else { return }
@@ -229,3 +246,5 @@ struct ResourceSectionWithTopics: View {
         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
     }
 }
+
+

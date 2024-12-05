@@ -37,8 +37,25 @@ class NetworkManager {
                 }
             }
     }
+    
+    func fetchResources (completion: @escaping([Resource]) -> Void) {
+        //make decoder
+        let newEndpoint = devEndpoint + ""
 
-    func addResource (link: String, topic: String, completion: @escaping ((ClassItem)-> Void)) {
+        AF.request(newEndpoint, method: .get)
+            .validate()
+            .responseDecodable(of: [Resource].self, decoder: decoder) { response in
+                switch response.result {
+                case .success(let resources):
+                    print ("Successfully got \(resources.count) Resources")
+                    completion(resources)
+                case .failure(let error):
+                    print ("Error in NetworkingManager.fetchClasses", error)
+                }
+            }
+    }
+
+    func addResource (link: String, topic: String, completion: @escaping ((Resource)-> Void)) {
         let newEndpoint = devEndpoint + ""
         let parameters: Parameters = [
             "link": link,
@@ -47,11 +64,11 @@ class NetworkManager {
         
         AF.request (newEndpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
-            .responseDecodable(of: ClassItem.self, decoder: decoder) { response in
+            .responseDecodable(of: Resource.self, decoder: decoder) { response in
                 switch response.result {
-                case .success(let classItem):
+                case .success(let resource):
                     print ("Successfully added resource")
-                    completion (classItem)
+                    completion (resource)
                 case .failure(let error):
                     print ("Error in NetworkingManager.addResource: \(error.localizedDescription)")
                 }

@@ -9,6 +9,9 @@
 
 The backend is built using **Flask (Python)**, while the frontend is developed in **XCode** using **Swift** for a seamless and user-friendly experience.
 
+The backend is containerized using **Docker**, ensuring consistent deployment and simple setup across any environment. The app is currently deployed and accessible at:  
+**[http://34.48.134.152/](http://34.48.134.152/)**
+
 ---
 
 ## Features
@@ -21,6 +24,7 @@ The backend is built using **Flask (Python)**, while the frontend is developed i
   - Mobile compatibility for on-the-go study planning.  
   - Easy navigation with dedicated sections for courses, prelims, and topics.  
 - **Seamless API Functionality**: Offers a robust backend for managing courses, prelims, and topics through well-structured API routes.
+- **Dockerized Backend**: Ensures portability, scalability, and ease of deployment.
 
 ---
 
@@ -94,8 +98,11 @@ The backend is built using **Flask (Python)**, while the frontend is developed i
 4. **Cross-Platform Availability**  
    - Backend: A robust API that can handle requests from multiple frontend clients.
    - Frontend: A mobile-friendly Swift app developed using XCode.
+     
+5. **Dockerization**  
+   The backend is fully containerized using Docker, enabling consistent and efficient deployment.
 
-5. **Documentation**  
+6. **Documentation**  
    This README includes all necessary documentation about the app's purpose, features, and API routes.
 
 ---
@@ -104,7 +111,8 @@ The backend is built using **Flask (Python)**, while the frontend is developed i
 - **Backend**: Flask (Python)
 - **Database**: SQLite
 - **Frontend**: XCode (Swift)
-- **Hosting**: Localhost for development (port `8000`)
+- **Containerization**: Docker
+- **Hosting**: Google Cloud VM
 
 ---
 
@@ -124,14 +132,26 @@ Backend:
    ```bash
    git clone https://github.com/mcorgi/hackchallenge2024.git
    cd hackchallenge2024
-2. Set up the frontend (iOS):
-- Open the project folder in XCode (look for the .xcodeproj or .xcworkspace file).
-- Update the backend URL in the iOS app’s configuration to match your backend deployment or local server URL.
 
-3. Run the frontend app:
+2. Run the backend using Docker Compose:
+
+   ```bash
+   docker-compose up -d
+  
+3. Access the backend:
+  - The backend will be available at: http://34.48.134.152/
+    
+### Frontend Setup (iOS)
+4. Open the project folder in XCode (look for the .xcodeproj or .xcworkspace file).
+
+- Update the backend URL in the iOS app’s configuration to http://34.48.134.152/.
+
+5. Run the app:
 - Select your target device or iOS simulator in XCode.
 - Click the Run button to launch the app.
-
-4. Access your app:
-- Backend: http://localhost:8000/
-- Frontend: iOS app running on the simulator or device.
+  
+6. Access your app:
+- Backend: http://34.48.134.152/
+- Frontend: The iOS app running on the simulator or device.
+   
+   

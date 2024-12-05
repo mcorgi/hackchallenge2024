@@ -97,7 +97,7 @@ class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     resource_link = db.Column(db.String, nullable=True)
-    prelim_id = db.Column(db.Integer, db.ForeignKey("prelim.id"), nullable=False)
+    prelim_id = db.Column(db.Integer, db.ForeignKey('prelim.id'), nullable=False) 
     prelims = db.relationship(
         "Prelim",
         secondary=prelim_topic,

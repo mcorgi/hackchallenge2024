@@ -161,11 +161,23 @@ def create_topic():
 
     if not name or not prelim_id:
         return failure_response("Missing required fields", 400)
+    
+    prelim = Prelim.query.get(prelim_id)
+    if not prelim:
+        return failure_response("Prelim not found", 404)
 
     topic = Topic(name=name, resource_link=resource_link, prelim_id=prelim_id)
+    prelim.topics.append(topic)
+
     db.session.add(topic)
     db.session.commit()
-    return success_response(topic.serialize(), 201)
+
+    return success_response({
+        "name": name,
+        "resource_link": resource_link,
+        "prelim_id": prelim.id,
+        "topic_id": topic.id
+    }, 201)
 
 
 @app.route("/api/topics/<int:topic_id>/", methods=["GET"])

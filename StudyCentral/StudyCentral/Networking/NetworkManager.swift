@@ -47,7 +47,7 @@ class NetworkManager {
     
     func fetchResources (completion: @escaping([Resource]) -> Void) {
         //make decoder
-        let newEndpoint = devEndpoint + ""
+        let newEndpoint = devEndpoint + "/api/topics/"
 
         AF.request(newEndpoint, method: .get)
             .validate()
@@ -63,7 +63,7 @@ class NetworkManager {
     }
 
     func addResource (link: String, topic: String, num: Int, completion: @escaping ((Resource)-> Void)) {
-        let newEndpoint = devEndpoint + ""
+        let newEndpoint = devEndpoint + "/api/topics/"
         let parameters: Parameters = [
             "link": link,
             "topic": topic,

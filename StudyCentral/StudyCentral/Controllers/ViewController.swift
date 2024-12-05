@@ -168,36 +168,45 @@ struct ViewController: View {
         })
     }
 
-    private func addNewResource() {
+    private func addResource() {
         // TODO: Send a POST request to create a resource
         let link = newResourceLink
         let topic = newResourceTopic
-        let num = 0
+        let num:Int
+        if (selectedPrelim == "First Prelim"){
+            num = 1
+        }
+        else if (selectedPrelim == "Second Prelim"){
+            num = 2
+        }
+        else {
+            num = 3
+        }
         NetworkManager.shared.addResource(link: link, topic: topic, num: num) { classItem in
             print ("added resource")
         }
     }
     
     // MARK: - Add Resource
-    private func addResource() {
-        guard !newResourceLink.isEmpty, !newResourceTopic.isEmpty else { return }
-
-        let newResource = (link: newResourceLink, topic: newResourceTopic)
-
-        switch selectedPrelim {
-        case "First Prelim":
-            fstPrelimResources.append(newResource)
-        case "Second Prelim":
-            sndPrelimResources.append(newResource)
-        case "Final Prelim":
-            finalPrelimResources.append(newResource)
-        default:
-            break
-        }
-
-        newResourceLink = ""
-        newResourceTopic = ""
-    }
+//    private func addResource() {
+//        guard !newResourceLink.isEmpty, !newResourceTopic.isEmpty else { return }
+//
+//        let newResource = (link: newResourceLink, topic: newResourceTopic)
+//
+//        switch selectedPrelim {
+//        case "First Prelim":
+//            fstPrelimResources.append(newResource)
+//        case "Second Prelim":
+//            sndPrelimResources.append(newResource)
+//        case "Final Prelim":
+//            finalPrelimResources.append(newResource)
+//        default:
+//            break
+//        }
+//
+//        newResourceLink = ""
+//        newResourceTopic = ""
+//    }
 }
 
 // MARK: - Functionality for Resource Section With Topics

@@ -26,6 +26,10 @@ def failure_response(message, code=404):
 
 # COURSE ROUTES
 
+@app.route("/")
+def home():
+    return "Hello, World!"
+
 @app.route("/api/courses/", methods=["GET"])
 def get_courses():
     """

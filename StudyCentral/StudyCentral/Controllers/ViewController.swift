@@ -167,11 +167,13 @@ struct ViewController: View {
             self.resourceList = resources
         })
     }
+
     private func addNewResource() {
         // TODO: Send a POST request to create a resource
         let link = newResourceLink
         let topic = newResourceTopic
-        NetworkManager.shared.addResource(link: link, topic: topic) { classItem in
+        let num = 0
+        NetworkManager.shared.addResource(link: link, topic: topic, num: num) { classItem in
             print ("added resource")
         }
     }

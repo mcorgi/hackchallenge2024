@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var classList: [ClassItem] = []
     @State private var searchQuery: String = ""
     var filteredClasses: [ClassItem] {
-        sampleClasses.filter { searchQuery.isEmpty || $0.name.localizedCaseInsensitiveContains(searchQuery) }
+        classList.filter { searchQuery.isEmpty || $0.name.localizedCaseInsensitiveContains(searchQuery) }
     }
     
     //MARK: - Networking

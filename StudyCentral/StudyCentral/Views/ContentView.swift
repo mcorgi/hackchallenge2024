@@ -10,10 +10,18 @@ import SwiftUI
 struct ContentView: View {
     
     // MARK: - Properties (data)
-    
+    @State private var classList: [ClassItem] = []
     @State private var searchQuery: String = ""
     var filteredClasses: [ClassItem] {
         sampleClasses.filter { searchQuery.isEmpty || $0.name.localizedCaseInsensitiveContains(searchQuery) }
+    }
+    
+    //MARK: - Networking
+    private func fetchClasses () {
+        NetworkManager.shared.fetchClasses ( completion: { /*[weak self]*/ classes in
+            /*guard let self else { return }*/
+            self.classList = classes
+        })
     }
     
     
@@ -54,6 +62,9 @@ struct ContentView: View {
                     .padding(.horizontal)
                 }
                 .padding()
+            }
+            .onAppear {
+                fetchClasses()
             }
             .navigationBarTitle("📚 STUDY CENTRAL 📚", displayMode: .inline)
         }

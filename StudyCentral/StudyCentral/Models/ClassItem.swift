@@ -58,15 +58,3 @@ let sampleClasses = [
         prerequisites: ["CS 2110", "CS 2800"]
     )
 ]
-
-//private func fetchClasses () {
-//    NetworkManager.shared.fetchClasses ( completion: { [weak self] classes in
-//        guard let self else { return }
-//        self.sampleClasses = classes
-//        
-//        DispatchQueue.main.async {
-//            self.collectionView.reloadData()
-//            self.refreshControl.endRefreshing()
-//        }
-//    })
-//}

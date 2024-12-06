@@ -17,9 +17,13 @@ struct ViewController: View {
     @State private var newResourceLink: String = ""
     @State private var newResourceTopic: String = ""
     
-    @State private var fstPrelimResources: [(link: String, topic: String)] = [("https://youtu.be/rbbTd-gkajw?si=kRUTl9Yvcqo3zifi", "Sorting Algorithms")]
-    @State private var sndPrelimResources: [(link: String, topic: String)] = [("https://youtu.be/aPQY__2H3tE?si=tnhvb-yypdCnfTmq", "Dynamic Programming")]
-    @State private var finalPrelimResources: [(link: String, topic: String)] = [("https://youtu.be/Tl90tNtKvxs?si=rNdE7f1M-VV7QBGh", "Ford-Fulkerson Algorithm")]
+    @State private var firstPrelimResources: [Resource] = [] //this replaces fstPrelimResources with networking
+    @State private var secondPrelimResources: [Resource] = [] //this replaces sndPrelimResources with networking
+    @State private var finPrelimResources: [Resource] = [] //this replaces finalPrelimResources with networking
+    
+    @State private var fstPrelimResources: [(link: String, topic: String)] = [("https://youtu.be/rbbTd-gkajw?si=kRUTl9Yvcqo3zifi", "Sorting Algorithms"), ("https://www.youtube.com/watch?v=JAf_aSIJryg", "Partial Derivatives"), ("https://www.youtube.com/watch?v=3ROzG6n4yMc", "Determinants")]
+    @State private var sndPrelimResources: [(link: String, topic: String)] = [("https://www.youtube.com/watch?v=BJ_0FURo9RE", "Double Integrals"), ("https://www.youtube.com/watch?v=JAXyLhvZ-Vg", "Divergence"), ("https://www.youtube.com/watch?v=Mt4dpGFVsYc", "Curl")]
+    @State private var finalPrelimResources: [(link: String, topic: String)] = [("https://www.youtube.com/watch?v=N_ZRcLheNv0", "Directional Derivatives"), ("https://youtu.be/aPQY__2H3tE?si=tnhvb-yypdCnfTmq", "Dynamic Programming"), ("https://youtu.be/Tl90tNtKvxs?si=rNdE7f1M-VV7QBGh", "Ford-Fulkerson Algorithm")]
 
     // MARK: - Body
     var body: some View {
@@ -165,10 +169,17 @@ struct ViewController: View {
         NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resources in
             /*guard let self else { return }*/
             self.resourceList = resources
+            let resourceOne = resourceList.filter { $0.prelimNum == 1 }
+            let resourceTwo = resourceList.filter { $0.prelimNum == 2 }
+            let resourceThree = resourceList.filter { $0.prelimNum == 3 }
+            
+            firstPrelimResources = resourceOne
+            secondPrelimResources = resourceTwo
+            finPrelimResources = resourceThree
         })
     }
 
-    private func addResource() {
+    private func addNewResource() {
         // TODO: Send a POST request to create a resource
         let link = newResourceLink
         let topic = newResourceTopic
@@ -182,31 +193,31 @@ struct ViewController: View {
         else {
             num = 3
         }
-        NetworkManager.shared.addResource(link: link, topic: topic, num: num) { classItem in
+        NetworkManager.shared.addResource(link: link, topic: topic, num: num) { resource in
             print ("added resource")
         }
     }
     
     // MARK: - Add Resource
-//    private func addResource() {
-//        guard !newResourceLink.isEmpty, !newResourceTopic.isEmpty else { return }
-//
-//        let newResource = (link: newResourceLink, topic: newResourceTopic)
-//
-//        switch selectedPrelim {
-//        case "First Prelim":
-//            fstPrelimResources.append(newResource)
-//        case "Second Prelim":
-//            sndPrelimResources.append(newResource)
-//        case "Final Prelim":
-//            finalPrelimResources.append(newResource)
-//        default:
-//            break
-//        }
-//
-//        newResourceLink = ""
-//        newResourceTopic = ""
-//    }
+    private func addResource() {
+        guard !newResourceLink.isEmpty, !newResourceTopic.isEmpty else { return }
+
+        let newResource = (link: newResourceLink, topic: newResourceTopic)
+
+        switch selectedPrelim {
+        case "First Prelim":
+            fstPrelimResources.append(newResource)
+        case "Second Prelim":
+            sndPrelimResources.append(newResource)
+        case "Final Prelim":
+            finalPrelimResources.append(newResource)
+        default:
+            break
+        }
+
+        newResourceLink = ""
+        newResourceTopic = ""
+    }
 }
 
 // MARK: - Functionality for Resource Section With Topics

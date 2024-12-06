@@ -5,7 +5,7 @@ services:
     image: sandratang1/hackchallenge2024
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "80:8000"
     command: python3 src/app.py

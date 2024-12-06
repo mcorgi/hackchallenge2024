@@ -104,10 +104,12 @@ class Topic(db.Model):
         back_populates="topics",
     )
 
+
+
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "resource_link": self.resource_link,
-            "prelims": [prelim.simple_serialize() for prelim in self.prelims],
+            "prelims": [prelim.simple_serialize() for prelim in self.prelims]
         }

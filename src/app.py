@@ -175,6 +175,7 @@ def create_topic():
 
     db.session.add(topic)
     db.session.commit()
+ 
 
     return success_response({
         "name": name,
@@ -206,6 +207,7 @@ def delete_topic(topic_id):
     db.session.delete(topic)
     db.session.commit()
     return success_response(topic.serialize())
+
 
 
 if __name__ == "__main__":

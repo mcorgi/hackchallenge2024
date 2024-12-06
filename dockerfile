@@ -5,6 +5,8 @@ WORKDIR /usr/app
 
 # Copy application code into the container
 COPY . . 
+COPY src/instance/database.db /usr/app/src/instance/
+
 
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt

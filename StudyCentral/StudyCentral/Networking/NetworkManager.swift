@@ -16,22 +16,29 @@ class NetworkManager {
         //convert to camelcase
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
-    private let devEndpoint: String = "" //add later when I get endpoint from Backend members
+    private let devEndpoint: String = "http://34.48.134.152" //add later when I get endpoint from Backend members
     
     let decoder = JSONDecoder()
 
     // MARK: - Requests
     func fetchClasses (completion: @escaping([ClassItem]) -> Void) {
         //make decoder
-        let newEndpoint = devEndpoint + ""
+        let newEndpoint = devEndpoint + "/api/courses/"
 
         AF.request(newEndpoint, method: .get)
             .validate()
-            .responseDecodable(of: [ClassItem].self, decoder: decoder) { response in
+            .responseDecodable(of: [String: [ClassItem]].self, decoder: decoder) { response in
                 switch response.result {
-                case .success(let classes):
-                    print ("Successfully got \(classes.count) Classes")
-                    completion(classes)
+                case .success(let classesDictionary):
+                    if let classes = classesDictionary["courses"] {
+                        print("Successfully got \(classes.count) Classes")
+                        completion(classes)
+                    } else {
+                        print("Key not found")
+                        completion([])
+                    }
+//                    print ("Successfully got \(classes.count) Classes")
+//                    completion(classes)
                 case .failure(let error):
                     print ("Error in NetworkingManager.fetchClasses", error)
                 }
@@ -40,7 +47,7 @@ class NetworkManager {
     
     func fetchResources (completion: @escaping([Resource]) -> Void) {
         //make decoder
-        let newEndpoint = devEndpoint + ""
+        let newEndpoint = devEndpoint + "/api/topics/"
 
         AF.request(newEndpoint, method: .get)
             .validate()
@@ -55,11 +62,12 @@ class NetworkManager {
             }
     }
 
-    func addResource (link: String, topic: String, completion: @escaping ((Resource)-> Void)) {
-        let newEndpoint = devEndpoint + ""
+    func addResource (link: String, topic: String, num: Int, completion: @escaping ((Resource)-> Void)) {
+        let newEndpoint = devEndpoint + "/api/topics/"
         let parameters: Parameters = [
             "link": link,
-            "topic": topic
+            "topic": topic,
+            "prelimNum": num
         ]
         
         AF.request (newEndpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default)

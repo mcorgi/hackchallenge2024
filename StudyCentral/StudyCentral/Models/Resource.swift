@@ -11,4 +11,5 @@ struct Resource: Identifiable, Codable {
     let id = UUID()
     let name: String
     let link: String
+    let prelimNum: Int
 }

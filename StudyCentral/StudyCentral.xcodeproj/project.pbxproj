@@ -21,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		C1030C792D0253B1003A5ED1 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		C1030C7B2D0260FF003A5ED1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C1E7C89C2CFFD32F006FBF96 /* StudyCentral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyCentral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E7C89F2CFFD32F006FBF96 /* StudyCentralApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyCentralApp.swift; sourceTree = "<group>"; };
 		C1E7C8A32CFFD330006FBF96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		C1E7C89E2CFFD32F006FBF96 /* StudyCentral */ = {
 			isa = PBXGroup;
 			children = (
+				C1030C7B2D0260FF003A5ED1 /* Info.plist */,
 				C1E7C9012CFFD830006FBF96 /* Controllers */,
 				C1E7C8FF2CFFD830006FBF96 /* Models */,
 				C1E7C9032CFFD830006FBF96 /* Networking */,
@@ -342,6 +344,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"StudyCentral/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyCentral/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -370,6 +373,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"StudyCentral/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyCentral/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

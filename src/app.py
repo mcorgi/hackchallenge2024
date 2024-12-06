@@ -115,18 +115,32 @@ def create_prelim():
     prelim = Prelim(title=title, date=date, course_id=course_id)
     db.session.add(prelim)
     db.session.commit()
+    print("HELLO")
+    print(prelim)
     return success_response(prelim.serialize(), 201)
 
 
-@app.route("/api/prelims/<int:prelim_id>/", methods=["GET"])
-def get_prelim(prelim_id):
+@app.route("/api/prelims/<int:course_id>/", methods=["GET"])
+def get_prelims_by_course(course_id):
     """
     Endpoint for getting a specific prelim by ID
     """
-    prelim = Prelim.query.get(prelim_id)
-    if prelim is None:
-        return failure_response("Prelim not found", 404)
-    return success_response(prelim.serialize())
+    course = Course.query.get(course_id)
+    if course is None:
+        return failure_response("Course not found", 404)
+
+    prelims = Prelim.query.filter_by(course_id=course_id).all()
+
+    if prelims is None:
+        return failure_response("Course has no prelims", 404)
+    
+    prelims_res = []
+
+    for p in prelims:
+        prelims_res.append(p.serialize())
+    
+    return success_response({"prelims": prelims_res})
+
 
 
 @app.route("/api/prelims/<int:prelim_id>/", methods=["DELETE"])
@@ -145,7 +159,7 @@ def delete_prelim(prelim_id):
 # TOPIC ROUTES
 
 @app.route("/api/topics/", methods=["GET"])
-def get_topics():
+def get_all_topics():
     """
     Endpoint for getting the list of all topics
     """
@@ -186,7 +200,7 @@ def create_topic():
 
 
 @app.route("/api/topics/<int:topic_id>/", methods=["GET"])
-def get_topic(topic_id):
+def get_specific_topic(topic_id):
     """
     Endpoint for getting a specific topic by ID
     """
@@ -207,6 +221,19 @@ def delete_topic(topic_id):
     db.session.delete(topic)
     db.session.commit()
     return success_response(topic.serialize())
+
+
+@app.route("/api/topics/prelims/<int:course_id>", methods=["GET"])
+def get_topics_by_course(course_id):
+    """
+    Endpoint for getting all topics from course id
+    """
+    course = Topic.query.get(course_id)
+    # need to get all prelims from that course id 
+
+    if course is None:
+        return failure_response("Course not found", 404)
+    return success_response(course.serialize())
 
 
 

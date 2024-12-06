@@ -44,6 +44,7 @@ class Course(db.Model):
             "description": self.description,
             "schedule": self.schedule,
             "prerequisites": self.prerequisites.split(",") if self.prerequisites else [],
+            "prelims": [prelim.serialize() for prelim in self.prelims],
         }
 
 

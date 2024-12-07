@@ -113,17 +113,17 @@ def create_prelim():
         return failure_response("Missing required fields", 400)
 
     prelim = Prelim(title=title, date=date, course_id=course_id)
+
     db.session.add(prelim)
     db.session.commit()
-    print("HELLO")
-    print(prelim)
+
     return success_response(prelim.serialize(), 201)
 
 
 @app.route("/api/prelims/<int:course_id>/", methods=["GET"])
 def get_prelims_by_course(course_id):
     """
-    Endpoint for getting a specific prelim by ID
+    Endpoint for getting all prelims by course ID
     """
     course = Course.query.get(course_id)
     if course is None:
@@ -181,33 +181,41 @@ def create_topic():
         return failure_response("Missing required fields", 400)
     
     prelim = Prelim.query.get(prelim_id)
+    
     if not prelim:
         return failure_response("Prelim not found", 404)
 
     topic = Topic(name=name, resource_link=resource_link, prelim_id=prelim_id)
+
     prelim.topics.append(topic)
 
     db.session.add(topic)
     db.session.commit()
  
 
-    return success_response({
-        "name": name,
-        "resource_link": resource_link,
-        "prelim_id": prelim.id,
-        "topic_id": topic.id
-    }, 201)
+    return success_response(topic.serialize(), 201)
 
 
-@app.route("/api/topics/<int:topic_id>/", methods=["GET"])
-def get_specific_topic(topic_id):
+@app.route("/api/topics/<int:prelim_id>/", methods=["GET"])
+def get_topic_by_prelim(prelim_id):
     """
-    Endpoint for getting a specific topic by ID
+    Endpoint for getting all topics by prelim ID
     """
-    topic = Topic.query.get(topic_id)
-    if topic is None:
-        return failure_response("Topic not found", 404)
-    return success_response(topic.serialize())
+    prelim = Prelim.query.get(prelim_id)
+    if prelim is None:
+        return failure_response("Prelim not found", 404)
+
+    topics = Topic.query.filter_by(prelim_id=prelim_id).all()
+
+    if topics is None:
+        return failure_response("Prelim has no topics", 404)
+    
+    topics_res = []
+
+    for t in topics:
+        topics_res.append(t.serialize())
+    
+    return success_response({"topics": topics_res})
 
 
 @app.route("/api/topics/<int:topic_id>/", methods=["DELETE"])

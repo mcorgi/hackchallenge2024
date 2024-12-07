@@ -98,19 +98,18 @@ class Topic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     resource_link = db.Column(db.String, nullable=True)
-    prelim_id = db.Column(db.Integer, db.ForeignKey('prelim.id'), nullable=False) 
+    prelim_id = db.Column(db.Integer, db.ForeignKey('prelim.id'), nullable=True) 
     prelims = db.relationship(
         "Prelim",
         secondary=prelim_topic,
         back_populates="topics",
     )
 
-
-
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "resource_link": self.resource_link,
+            "prelim_id": self.prelim_id,
             "prelims": [prelim.simple_serialize() for prelim in self.prelims]
         }

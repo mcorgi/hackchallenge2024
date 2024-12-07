@@ -13,7 +13,7 @@ struct ClassItem: Identifiable, Codable {
     let description: String
     let schedule: String
     let prerequisites: [String]
-//    let prelims: [Prelim]
+    let prelims: [Prelim]
 }
 
 // Dummy Data

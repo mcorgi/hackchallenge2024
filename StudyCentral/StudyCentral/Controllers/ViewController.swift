@@ -99,7 +99,8 @@ struct ViewController: View {
                         // MARK: First Prelim Section
                         ResourceSectionWithTopics(
                             title: "First Prelim",
-                            resources: $fstPrelimResources,
+//                            resources: $fstPrelimResources,
+                            resources: $firstPrelimResources,
                             expandedTopic: $expandedTopic
                         )
                         .background(.yellow.opacity(0.2))
@@ -107,7 +108,8 @@ struct ViewController: View {
                         // MARK: Second Prelim Section
                         ResourceSectionWithTopics(
                             title: "Second Prelim",
-                            resources: $sndPrelimResources,
+//                            resources: $sndPrelimResources,
+                            resources: $secondPrelimResources,
                             expandedTopic: $expandedTopic
                         )
                         .background(.orange.opacity(0.2))
@@ -115,7 +117,8 @@ struct ViewController: View {
                         // MARK: Final Prelim Section
                         ResourceSectionWithTopics(
                             title: "Final Prelim",
-                            resources: $finalPrelimResources,
+//                            resources: $finalPrelimResources,
+                            resources: $finPrelimResources,
                             expandedTopic: $expandedTopic
                         )
                         .background(.pink.opacity(0.2))
@@ -161,63 +164,75 @@ struct ViewController: View {
 
                     Divider().background(Color.black)
                 }
-//                .onAppear() {
-//                    fetchResource()
-//                }
+                .onAppear() {
+                    fetchPrelims()
+                }
             }
         }
     }
 
     //MARK: - Networking
-    private func fetchResource () {
-        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesOne in
-            /*guard let self else { return }*/
-//            self.resourceList = resourcesOne
-            for resource in resourcesOne {
-                self.firstPrelimResources.append((resource.link, resource.name))
-            }
-        })
-        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesTwo in
-            /*guard let self else { return }*/
-//            self.resourceList = resources
-            for resource in resourcesTwo {
-                self.secondPrelimResources.append((resource.link, resource.name))
-            }
-        })
-        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesThree in
-            /*guard let self else { return }*/
-//            self.resourceList = resources
-            for resource in resourcesThree {
-                self.finPrelimResources.append((resource.link, resource.name))
-            }
-        })
-    }
+//    private func fetchResource () {
+//        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesOne in
+//            /*guard let self else { return }*/
+////            self.resourceList = resourcesOne
+//            for resource in resourcesOne {
+//                self.firstPrelimResources.append((resource.link, resource.name))
+//            }
+//        })
+//        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesTwo in
+//            /*guard let self else { return }*/
+////            self.resourceList = resources
+//            for resource in resourcesTwo {
+//                self.secondPrelimResources.append((resource.link, resource.name))
+//            }
+//        })
+//        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesThree in
+//            /*guard let self else { return }*/
+////            self.resourceList = resources
+//            for resource in resourcesThree {
+//                self.finPrelimResources.append((resource.link, resource.name))
+//            }
+//        })
+//    }
     
     private func fetchPrelims () {
         NetworkManager.shared.fetchPrelims ( completion: { /*[weak self]*/ prelims in
             /*guard let self else { return }*/
             self.prelimList = prelims
+            let prelim1 = prelimList[0]
+            for topic in prelim1.topics {
+                self.firstPrelimResources.append((topic.link ?? "", topic.name))
+            }
+            let prelim2 = prelimList[1]
+            for topic in prelim2.topics {
+                self.secondPrelimResources.append((topic.link ?? "", topic.name))
+            }
+            let prelim3 = prelimList[2]
+            for topic in prelim3.topics {
+                self.finPrelimResources.append((topic.link ?? "", topic.name))
+            }
         })
     }
 
-    private func addNewResource() {
-        // TODO: Send a POST request to create a resource
-        let link = newResourceLink
-        let topic = newResourceTopic
-        let num:Int
-        if (selectedPrelim == "First Prelim"){
-            num = prelimList[0].prelimId
-        }
-        else if (selectedPrelim == "Second Prelim"){
-            num = prelimList[1].prelimId
-        }
-        else {
-            num = prelimList[2].prelimId
-        }
-        NetworkManager.shared.addResource(link: link, topic: topic, num: num) { resource in
-            print ("added resource")
-        }
-    }
+//    private func addNewResource() {
+//        // TODO: Send a POST request to create a resource
+//        let link = newResourceLink
+//        let topic = newResourceTopic
+//        let num:Int
+//        if (selectedPrelim == "First Prelim"){
+//            num = prelimList[0].prelimId
+//        }
+//        else if (selectedPrelim == "Second Prelim"){
+//            num = prelimList[1].prelimId
+//        }
+//        else {
+//            num = prelimList[2].prelimId
+//        }
+//        NetworkManager.shared.addResource(link: link, topic: topic, num: num) { resource in
+//            print ("added resource")
+//        }
+//    }
     
     // MARK: - Add Resource
     private func addResource() {

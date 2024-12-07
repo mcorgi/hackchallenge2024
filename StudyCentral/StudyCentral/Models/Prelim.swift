@@ -9,6 +9,9 @@ import Foundation
 
 struct Prelim: Identifiable, Codable {
     let id = UUID()
-    let name: String
-    let prelimId: Int
+//    let prelimId: Int
+    let date = Date()
+//    let course_id: Int
+    let title: String
+    let topics: [Resource]
 }

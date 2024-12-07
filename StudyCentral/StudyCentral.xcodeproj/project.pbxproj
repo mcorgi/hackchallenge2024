@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C1030C7A2D0253B1003A5ED1 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1030C792D0253B1003A5ED1 /* Resource.swift */; };
+		C1859DBF2D03C099007AB33F /* Prelim.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1859DBE2D03C099007AB33F /* Prelim.swift */; };
 		C1ACBB1B2CFFD90700F7B51A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C1ACBB1A2CFFD90700F7B51A /* Alamofire */; };
 		C1E7C8A02CFFD32F006FBF96 /* StudyCentralApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E7C89F2CFFD32F006FBF96 /* StudyCentralApp.swift */; };
 		C1E7C8A42CFFD330006FBF96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1E7C8A32CFFD330006FBF96 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		C1030C792D0253B1003A5ED1 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		C1030C7B2D0260FF003A5ED1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C1859DBE2D03C099007AB33F /* Prelim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prelim.swift; sourceTree = "<group>"; };
 		C1E7C89C2CFFD32F006FBF96 /* StudyCentral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyCentral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E7C89F2CFFD32F006FBF96 /* StudyCentralApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyCentralApp.swift; sourceTree = "<group>"; };
 		C1E7C8A32CFFD330006FBF96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				C1E7C8FE2CFFD830006FBF96 /* ClassItem.swift */,
 				C1030C792D0253B1003A5ED1 /* Resource.swift */,
+				C1859DBE2D03C099007AB33F /* Prelim.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1859DBF2D03C099007AB33F /* Prelim.swift in Sources */,
 				C1E7C9072CFFD830006FBF96 /* ViewController.swift in Sources */,
 				C1E7C8A02CFFD32F006FBF96 /* StudyCentralApp.swift in Sources */,
 				C1E7C9082CFFD830006FBF96 /* NetworkManager.swift in Sources */,

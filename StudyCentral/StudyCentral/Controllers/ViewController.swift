@@ -13,13 +13,14 @@ struct ViewController: View {
     let classItem: ClassItem
     @State private var expandedTopic: String?
     @State private var selectedPrelim: String = "First Prelim"
-    @State private var resourceList: [Resource] = []
+//    @State private var resourceList: [Resource] = []
+    @State private var prelimList: [Prelim] = []
     @State private var newResourceLink: String = ""
     @State private var newResourceTopic: String = ""
     
-    @State private var firstPrelimResources: [Resource] = [] //this replaces fstPrelimResources with networking
-    @State private var secondPrelimResources: [Resource] = [] //this replaces sndPrelimResources with networking
-    @State private var finPrelimResources: [Resource] = [] //this replaces finalPrelimResources with networking
+    @State private var firstPrelimResources: [(link: String, topic: String)] = [] //this replaces fstPrelimResources with networking
+    @State private var secondPrelimResources: [(link: String, topic: String)] = [] //this replaces sndPrelimResources with networking
+    @State private var finPrelimResources: [(link: String, topic: String)] = [] //this replaces finalPrelimResources with networking
     
     @State private var fstPrelimResources: [(link: String, topic: String)] = [("https://youtu.be/rbbTd-gkajw?si=kRUTl9Yvcqo3zifi", "Sorting Algorithms"), ("https://www.youtube.com/watch?v=JAf_aSIJryg", "Partial Derivatives"), ("https://www.youtube.com/watch?v=3ROzG6n4yMc", "Determinants")]
     @State private var sndPrelimResources: [(link: String, topic: String)] = [("https://www.youtube.com/watch?v=BJ_0FURo9RE", "Double Integrals"), ("https://www.youtube.com/watch?v=JAXyLhvZ-Vg", "Divergence"), ("https://www.youtube.com/watch?v=Mt4dpGFVsYc", "Curl")]
@@ -160,22 +161,42 @@ struct ViewController: View {
 
                     Divider().background(Color.black)
                 }
+//                .onAppear() {
+//                    fetchResource()
+//                }
             }
         }
     }
 
     //MARK: - Networking
     private func fetchResource () {
-        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resources in
+        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesOne in
             /*guard let self else { return }*/
-            self.resourceList = resources
-            let resourceOne = resourceList.filter { $0.prelimNum == 1 }
-            let resourceTwo = resourceList.filter { $0.prelimNum == 2 }
-            let resourceThree = resourceList.filter { $0.prelimNum == 3 }
-            
-            firstPrelimResources = resourceOne
-            secondPrelimResources = resourceTwo
-            finPrelimResources = resourceThree
+//            self.resourceList = resourcesOne
+            for resource in resourcesOne {
+                self.firstPrelimResources.append((resource.link, resource.name))
+            }
+        })
+        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesTwo in
+            /*guard let self else { return }*/
+//            self.resourceList = resources
+            for resource in resourcesTwo {
+                self.secondPrelimResources.append((resource.link, resource.name))
+            }
+        })
+        NetworkManager.shared.fetchResources ( completion: { /*[weak self]*/ resourcesThree in
+            /*guard let self else { return }*/
+//            self.resourceList = resources
+            for resource in resourcesThree {
+                self.finPrelimResources.append((resource.link, resource.name))
+            }
+        })
+    }
+    
+    private func fetchPrelims () {
+        NetworkManager.shared.fetchPrelims ( completion: { /*[weak self]*/ prelims in
+            /*guard let self else { return }*/
+            self.prelimList = prelims
         })
     }
 
@@ -185,13 +206,13 @@ struct ViewController: View {
         let topic = newResourceTopic
         let num:Int
         if (selectedPrelim == "First Prelim"){
-            num = 1
+            num = prelimList[0].prelimId
         }
         else if (selectedPrelim == "Second Prelim"){
-            num = 2
+            num = prelimList[1].prelimId
         }
         else {
-            num = 3
+            num = prelimList[2].prelimId
         }
         NetworkManager.shared.addResource(link: link, topic: topic, num: num) { resource in
             print ("added resource")

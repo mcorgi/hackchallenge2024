@@ -45,6 +45,30 @@ class NetworkManager {
             }
     }
     
+    func fetchPrelims (completion: @escaping([Prelim]) -> Void) {
+        //make decoder
+        let newEndpoint = devEndpoint + "/api/prelims/"
+
+        AF.request(newEndpoint, method: .get)
+            .validate()
+            .responseDecodable(of: [String: [Prelim]].self, decoder: decoder) { response in
+                switch response.result {
+                case .success(let prelimDictionary):
+                    if let prelims = prelimDictionary["prelims"] {
+                        print("Successfully got \(prelims.count) Prelims")
+                        completion(prelims)
+                    } else {
+                        print("Key not found")
+                        completion([])
+                    }
+//                    print ("Successfully got \(classes.count) Classes")
+//                    completion(classes)
+                case .failure(let error):
+                    print ("Error in NetworkingManager.fetchPrelims", error)
+                }
+            }
+    }
+    
     func fetchResources (completion: @escaping([Resource]) -> Void) {
         //make decoder
         let newEndpoint = devEndpoint + "/api/topics/"

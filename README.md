@@ -84,33 +84,114 @@ The backend is containerized using **Docker**, ensuring consistent deployment an
 
 ---
 ## iOS Requirements
-- ** Multiple screens ** We had our main screen which displayed the different courses. Users were then able to click on a course, which took them to another screen with the detailed information like prereqs, course description, and all the different resources for each prelim, along with the option to add a topic and link for a certain prelim in the course.
-- ** Scrollable Views ** We had a view with vertical scrolling that displayed all the courses. Then in each view with the detailed information we had a view with horizontal scrolling that displayed all resources for each prelim.
-- ** Networking integration ** We fetched the courses from the backend. We also fetched the prelims for each course, which then had resources associates to that prelim. We also had a function where the user could post a new resource associated with a specific prelim.
+### Multiple screens
+We had our main screen which displayed the different courses. Users were then able to click on a course, which took them to another screen with the detailed information like prereqs, course description, and all the different resources for each prelim, along with the option to add a topic and link for a certain prelim in the course.
+
+### Scrollable Views 
+We had a view with vertical scrolling that displayed all the courses. Then in each view with the detailed information we had a view with horizontal scrolling that displayed all resources for each prelim.
+
+### Networking integration 
+We fetched the courses from the backend. We also fetched the prelims for each course, which then had resources associates to that prelim. We also had a function where the user could post a new resource associated with a specific prelim.
 
 ---
-## How We Addressed the Requirements
 
-1. **CRUD Operations**  
-   The app supports full CRUD operations for courses, prelims, and topics via the backend API routes.
+## Backend Requirements
+#### **1. Routes**
 
-2. **Logical Flow**  
-   The API endpoints are well-structured and ensure a clear workflow for managing data, complemented by a user-friendly frontend.
+The backend provides the following endpoints categorized into **Courses**, **Prelims**, and **Topics**:
 
-3. **Collaboration**  
-   StudyCentral allows students to collaboratively build and share study resources, making it easier for everyone to prepare for prelims.
+- **Home Route**:
+  - **`GET /`**: A simple route to verify the server is running. Returns a "Hello, World!" message.
 
-4. **Cross-Platform Availability**  
-   - Backend: A robust API that can handle requests from multiple frontend clients.
-   - Frontend: A mobile-friendly Swift app developed using XCode.
-     
-5. **Dockerization**  
-   The backend is fully containerized using Docker, enabling consistent and efficient deployment.
+- **Course Routes**:
+  - **`GET /api/courses/`**: Retrieves a list of all courses.
+  - **`POST /api/courses/`**: Creates a new course with fields like name, description, schedule, and prerequisites.
+  - **`GET /api/courses/<course_id>/`**: Retrieves details of a specific course by ID.
+  - **`DELETE /api/courses/<course_id>/`**: Deletes a specific course by ID.
 
-6. **Documentation**  
-   This README includes all necessary documentation about the app's purpose, features, and API routes.
+- **Prelim Routes**:
+  - **`GET /api/prelims/`**: Retrieves a list of all prelims.
+  - **`POST /api/prelims/`**: Creates a new prelim with fields like title, date, and the associated course ID.
+  - **`GET /api/prelims/<course_id>/`**: Retrieves all prelims for a specific course by ID.
+  - **`DELETE /api/prelims/<prelim_id>/`**: Deletes a specific prelim by ID.
+
+- **Topic Routes**:
+  - **`GET /api/topics/`**: Retrieves a list of all topics.
+  - **`POST /api/topics/`**: Creates a new topic with fields like name, resource link, and associated prelim ID.
+  - **`GET /api/topics/<prelim_id>/`**: Retrieves all topics associated with a specific prelim ID.
+  - **`DELETE /api/topics/<topic_id>/`**: Deletes a specific topic by ID.
+  - **`GET /api/topics/prelims/<course_id>`**: Retrieves all topics for prelims within a specific course.
 
 ---
+
+#### **2. Database Models**
+
+The backend uses **SQLAlchemy** as the ORM for database management. The models include:
+
+- **Course**:
+  - Represents a course.
+  - Fields: `id`, `name`, `description`, `schedule`, `prerequisites`.
+  - Relationships: A course can have multiple prelims (one-to-many relationship).
+
+- **Prelim**:
+  - Represents an exam (prelim) associated with a course.
+  - Fields: `id`, `title`, `date`, `course_id`.
+  - Relationships:
+    - Belongs to a course (many-to-one).
+    - Can have multiple topics (many-to-many relationship).
+
+- **Topic**:
+  - Represents a study topic, potentially linked to resources.
+  - Fields: `id`, `name`, `resource_link`, `prelim_id`.
+  - Relationships: Associated with multiple prelims (many-to-many relationship).
+
+- **Join Tables**:
+  - **`prelim_course`**: Links prelims to courses (many-to-many).
+  - **`prelim_topic`**: Links prelims to topics (many-to-many).
+
+---
+
+#### **3. Database Configuration**
+
+- **SQLite**:
+  - Used as the database for simplicity and local development.
+- **Flask-SQLAlchemy**:
+  - Handles database interactions seamlessly.
+- **Database Initialization**:
+  - Automatic creation of tables using `db.create_all()`.
+
+---
+
+#### **4. Utility Functions**
+
+- **`success_response(data, code)`**:
+  - Standardized JSON responses for successful operations.
+- **`failure_response(message, code)`**:
+  - Standardized JSON responses for errors or failures.
+
+---
+
+#### **5. Scalability Considerations**
+
+- **Relationships**:
+  - The relationships between models (one-to-many, many-to-many) allow for easy expansion of features.
+- **Cascade Deletions**:
+  - Prelims and topics associated with a course are deleted automatically when the course is deleted.
+
+---
+
+#### **6. Frameworks and Libraries**
+
+- **Flask**: Lightweight framework for building the API.
+- **SQLAlchemy**: ORM for database modeling and interactions.
+- **JSON**: Used for data exchange between the client and server.
+
+---
+
+#### **7. Additional Notes**
+
+- The backend is currently standalone and does not integrate with third-party APIs.
+- It’s designed to handle relationships between entities (courses, prelims, and topics) efficiently and allows CRUD operations for all entities.
 
 ## Technology Stack
 - **Backend**: Flask (Python)

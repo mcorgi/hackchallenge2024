@@ -146,7 +146,7 @@ struct ViewController: View {
                             .background(Color.purple.opacity(0.4))
                             .padding(.bottom, 8)
 
-                            Button(action: addResource) { //change this to addNewResource once networking is working
+                            Button(action: addNewResource) { //change this to addNewResource once networking is working
                                 Text("Add Resource")
                                     .padding()
                                     .frame(maxWidth: .infinity)
@@ -215,24 +215,24 @@ struct ViewController: View {
         })
     }
 
-//    private func addNewResource() {
-//        // TODO: Send a POST request to create a resource
-//        let link = newResourceLink
-//        let topic = newResourceTopic
-//        let num:Int
-//        if (selectedPrelim == "First Prelim"){
-//            num = prelimList[0].prelimId
-//        }
-//        else if (selectedPrelim == "Second Prelim"){
-//            num = prelimList[1].prelimId
-//        }
-//        else {
-//            num = prelimList[2].prelimId
-//        }
-//        NetworkManager.shared.addResource(link: link, topic: topic, num: num) { resource in
-//            print ("added resource")
-//        }
-//    }
+    private func addNewResource() {
+        // TODO: Send a POST request to create a resource
+        let link = newResourceLink
+        let topic = newResourceTopic
+        var identify = ""
+        if selectedPrelim == "First Prelim" {
+            identify = prelimList[0].id.uuidString
+        }
+        else if selectedPrelim == "Second Prelim" {
+            identify = prelimList[1].id.uuidString
+        }
+        else {
+            let identify = prelimList[2].id.uuidString
+        }
+        NetworkManager.shared.addResource(link: link, topic: topic, identify: identify) { resource in
+            print ("added resource")
+        }
+    }
     
     // MARK: - Add Resource
     private func addResource() {

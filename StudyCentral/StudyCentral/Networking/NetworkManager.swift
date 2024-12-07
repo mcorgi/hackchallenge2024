@@ -56,6 +56,13 @@ class NetworkManager {
                 case .success(let prelimDictionary):
                     if let prelims = prelimDictionary["prelims"] {
                         print("Successfully got \(prelims.count) Prelims")
+                        var temp = 0
+                        for r in prelims {
+                            for c in r.topics {
+                                temp += 1
+                            }
+                        }
+                        print("Successfully got \(temp) Resources")
                         completion(prelims)
                     } else {
                         print("Key not found")
@@ -69,29 +76,29 @@ class NetworkManager {
             }
     }
     
-    func fetchResources (completion: @escaping([Resource]) -> Void) {
-        //make decoder
-        let newEndpoint = devEndpoint + "/api/topics/"
+//    func fetchResources (completion: @escaping([Resource]) -> Void) {
+//        //make decoder
+//        let newEndpoint = devEndpoint + "/api/topics/"
+//
+//        AF.request(newEndpoint, method: .get)
+//            .validate()
+//            .responseDecodable(of: [Resource].self, decoder: decoder) { response in
+//                switch response.result {
+//                case .success(let resources):
+//                    print ("Successfully got \(resources.count) Resources")
+//                    completion(resources)
+//                case .failure(let error):
+//                    print ("Error in NetworkingManager.fetchClasses", error)
+//                }
+//            }
+//    }
 
-        AF.request(newEndpoint, method: .get)
-            .validate()
-            .responseDecodable(of: [Resource].self, decoder: decoder) { response in
-                switch response.result {
-                case .success(let resources):
-                    print ("Successfully got \(resources.count) Resources")
-                    completion(resources)
-                case .failure(let error):
-                    print ("Error in NetworkingManager.fetchClasses", error)
-                }
-            }
-    }
-
-    func addResource (link: String, topic: String, num: Int, completion: @escaping ((Resource)-> Void)) {
+    func addResource (link: String, topic: String, identify: String, completion: @escaping ((Resource)-> Void)) {
         let newEndpoint = devEndpoint + "/api/topics/"
         let parameters: Parameters = [
-            "link": link,
-            "topic": topic,
-            "prelimNum": num
+            "resource_link": link,
+            "name": topic,
+            "prelim_id": identify
         ]
         
         AF.request (newEndpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default)

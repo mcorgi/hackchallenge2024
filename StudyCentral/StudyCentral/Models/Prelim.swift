@@ -9,7 +9,7 @@ import Foundation
 
 struct Prelim: Identifiable, Codable {
     let id = UUID()
-//    let prelimId: Int
+//    let prelim_id: Int
     let date = Date()
 //    let course_id: Int
     let title: String

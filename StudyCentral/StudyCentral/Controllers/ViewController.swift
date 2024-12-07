@@ -99,8 +99,8 @@ struct ViewController: View {
                         // MARK: First Prelim Section
                         ResourceSectionWithTopics(
                             title: "First Prelim",
-//                            resources: $fstPrelimResources,
-                            resources: $firstPrelimResources,
+                            resources: $fstPrelimResources,
+//                            resources: $firstPrelimResources,
                             expandedTopic: $expandedTopic
                         )
                         .background(.yellow.opacity(0.2))
@@ -108,8 +108,8 @@ struct ViewController: View {
                         // MARK: Second Prelim Section
                         ResourceSectionWithTopics(
                             title: "Second Prelim",
-//                            resources: $sndPrelimResources,
-                            resources: $secondPrelimResources,
+                            resources: $sndPrelimResources,
+//                            resources: $secondPrelimResources,
                             expandedTopic: $expandedTopic
                         )
                         .background(.orange.opacity(0.2))
@@ -117,8 +117,8 @@ struct ViewController: View {
                         // MARK: Final Prelim Section
                         ResourceSectionWithTopics(
                             title: "Final Prelim",
-//                            resources: $finalPrelimResources,
-                            resources: $finPrelimResources,
+                            resources: $finalPrelimResources,
+//                            resources: $finPrelimResources,
                             expandedTopic: $expandedTopic
                         )
                         .background(.pink.opacity(0.2))
@@ -146,7 +146,7 @@ struct ViewController: View {
                             .background(Color.purple.opacity(0.4))
                             .padding(.bottom, 8)
 
-                            Button(action: addNewResource) { //change this to addNewResource once networking is working
+                            Button(action: addResource) { //change this to addNewResource once networking is working
                                 Text("Add Resource")
                                     .padding()
                                     .frame(maxWidth: .infinity)
@@ -202,15 +202,15 @@ struct ViewController: View {
             self.prelimList = prelims
             let prelim1 = prelimList[0]
             for topic in prelim1.topics {
-                self.firstPrelimResources.append((topic.link ?? "", topic.name))
+                self.firstPrelimResources.append((topic.resource_link ?? "", topic.name))
             }
             let prelim2 = prelimList[1]
             for topic in prelim2.topics {
-                self.secondPrelimResources.append((topic.link ?? "", topic.name))
+                self.secondPrelimResources.append((topic.resource_link ?? "", topic.name))
             }
             let prelim3 = prelimList[2]
             for topic in prelim3.topics {
-                self.finPrelimResources.append((topic.link ?? "", topic.name))
+                self.finPrelimResources.append((topic.resource_link ?? "", topic.name))
             }
         })
     }
@@ -242,10 +242,13 @@ struct ViewController: View {
 
         switch selectedPrelim {
         case "First Prelim":
+//            firstPrelimResources.append(newResource)
             fstPrelimResources.append(newResource)
         case "Second Prelim":
+//            secondPrelimResources.append(newResource)
             sndPrelimResources.append(newResource)
         case "Final Prelim":
+//            finPrelimResources.append(newResource)
             finalPrelimResources.append(newResource)
         default:
             break

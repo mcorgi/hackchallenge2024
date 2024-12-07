@@ -10,6 +10,6 @@ import Foundation
 struct Resource: Identifiable, Codable {
     let id = UUID()
     let name: String
-    let link: String?
+    let resource_link: String?
 //    let prelimNum: Int
 }

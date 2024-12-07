@@ -91,7 +91,7 @@ We had our main screen which displayed the different courses. Users were then ab
 We had a view with vertical scrolling that displayed all the courses. Then in each view with the detailed information we had a view with horizontal scrolling that displayed all resources for each prelim.
 
 ### Networking integration 
-We fetched the courses from the backend. We also fetched the prelims for each course, which then had resources associates to that prelim. We also had a function where the user could post a new resource associated with a specific prelim.
+We fetched the courses from the backend. We also fetched the prelims for each course, which then had resources associated to that prelim. We also had a function where the user could post a new resource (topic and link) associated with a specific prelim.
 
 ---
 

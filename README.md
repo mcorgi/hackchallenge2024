@@ -83,7 +83,12 @@ The backend is containerized using **Docker**, ensuring consistent deployment an
   Delete a specific topic.
 
 ---
+## iOS Requirements
+- ** Multiple screens ** We had our main screen which displayed the different courses. Users were then able to click on a course, which took them to another screen with the detailed information like prereqs, course description, and all the different resources for each prelim, along with the option to add a topic and link for a certain prelim in the course.
+- ** Scrollable Views ** We had a view with vertical scrolling that displayed all the courses. Then in each view with the detailed information we had a view with horizontal scrolling that displayed all resources for each prelim.
+- ** Networking integration ** We fetched the courses from the backend. We also fetched the prelims for each course, which then had resources associates to that prelim. We also had a function where the user could post a new resource associated with a specific prelim.
 
+---
 ## How We Addressed the Requirements
 
 1. **CRUD Operations**  
